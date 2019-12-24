@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>UserList</title>
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link href='assets/css/tablestyle.css' rel="stylesheet" >
+        <link href="assets/css/pagination.css" rel="stylesheet" />
+
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
+    </head>
+    <body>
+        <h1 class = 'Dgtitle'>User List</h1>
+        <div class="container">
+            
+            <div class="table-responsive Dgtable">
+            </div>
+            <div class="row">
+                <div class = "mx-auto d-block align-items-center" id="pagination"></div>
+            </div>
+            
+        </div>
+        <footer class="fixed-bottom">
+            <div><span id = 'logout'><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</span></div>
+        </footer class="fixed-bottom">
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        $(document).ready(function() {
+            if(getCookie("username") == '')
+                window.location.href = "index.html";
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost/simpletask/api/table.php',
+                dataType:'json',
+                success: function (data) {
+                    tmp = data;
+                    let container = $('#pagination');
+                    container.pagination({
+                        dataSource:tmp,
+                        pageSize: 5,
+                        callback: function (data, pagination) {
+                            var dataHtml = '<table class="table text-left"> <tbody>';
+                            var evenstring = "<tr class='even'><td rowspan='2' class='text-right'><img class='check' src='./assets//img/check.png'></td> <td class='Dgbold  Dgright '>";
+                            var oddstring  = "<tr class='odd' ><td rowspan='2' class='text-right'><img class='check' src='./assets//img/check.png'></td> <td class='Dgbold Dgright '>";
+                            $.each(data, function (index, item) {
+                                if(index % 2 == 0){
+                                    dataHtml += evenstring + item.name + '</td><td class="Dgbold">'+item.other + '</td></tr><tr class="even" ><td class="Dgright ">'+item.data1+'</td><td class="Dgbold">'+item.data2 +'</td></tr>';
+
+                                }else{
+                                    dataHtml += oddstring + item.name + '</td><td class="Dgbold">'+item.other + '</td></tr><tr class="odd" ><td class="Dgright ">'+item.data1+'</td><td class="Dgbold">'+item.data2 +'</td></tr>';
+
+                                }
+                            });
+            
+                            dataHtml += '</tbody> </table>';
+            
+                            $(".Dgtable").html(dataHtml);
+                        }
+                    });
+                }
+            })
+            $('#logout').click(function(){
+                $.ajax ({
+                    url: 'http://localhost/simpletask/api/delete.php',
+                    method: 'GET',
+                    dataType: "text",
+                    success: function (data) {
+                        if(data == 'success')
+                            window.location.href = "index.html";
+                        else{
+                            $.notifyDefaults({
+                                type: 'danger',
+                                allow_dismiss: false
+                            });
+                            $.notify('User information is incorrect. please try it again');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    </body>
+</html>
