@@ -11,4 +11,4 @@
 	html and jquery/css
 	You can placed this code in any directory and check it.
 	
-	index.html
+	index.html 
