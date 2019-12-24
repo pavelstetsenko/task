@@ -1,0 +1,53 @@
+body{
+    text-align: center;
+}
+body{
+    background-color:#eee;
+}
+.Dgtable{
+    border-top: 15px solid #E98C3B;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.Dgtitle{
+    justify-self: center;
+    margin-top:30px;
+}
+.table{
+    border:none;
+    align-content: center;
+}
+.table td{
+    border: none;
+}
+.even {
+    background-color:#dee2e6 ;
+}
+.odd {
+    background-color:#fff ;
+}
+.check{
+    width: 40px;
+    height: 40px;
+    margin-right: 30px;
+}
+.Dgbold{
+    font-size: 18px;
+    font-weight: 600;
+}
+.Dgright{
+    margin-left: 20px;
+}
+footer{
+    background-color:#dee2e6;
+    height: 50px;
+}
+footer div{
+    margin-top: 10px;
+}
+footer span{
+    cursor: pointer;
+}
+footer span:hover{
+    text-decoration:underline;
+}
